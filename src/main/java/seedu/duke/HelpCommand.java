@@ -2,7 +2,7 @@ package seedu.duke;
 
 public class HelpCommand {
 
-    public void execute(Ui ui) {
+    public void execute(SpendingList spendingList, Ui ui) {
         ui.printHelp();
     }
 }

@@ -28,6 +28,10 @@ public class Item {
         return amount;
     }
 
+    public String getYearMonth() {
+        return currentDate().substring(0, 7);
+    }
+
     public String toString() {
         return currentDate() + " " + description + " $" + amount;
     }
