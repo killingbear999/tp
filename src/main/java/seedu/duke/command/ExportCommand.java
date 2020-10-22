@@ -13,6 +13,7 @@ import seedu.duke.category.Item;
 import seedu.duke.exceptions.InvalidCommandException;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ExportCommand extends Command {
     private String filePath;
@@ -22,12 +23,12 @@ public class ExportCommand extends Command {
     }
 
     @Override
-    public void execute(SpendingList spendingList, Ui ui) throws InvalidCommandException {
+    public void execute(SpendingList spendingList, Ui ui) throws IOException {
         exportToExcel(spendingList);
         ui.printExportMessage();
     }
 
-    private void exportToExcel(SpendingList list) throws InvalidCommandException {
+    private void exportToExcel(SpendingList list) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("sheet0");
         sheet.setDefaultColumnWidth(15);
@@ -56,12 +57,12 @@ public class ExportCommand extends Command {
             row.createCell(4).setCellValue(item.getCategory());
         }
         try {
-            FileOutputStream output = new FileOutputStream(filePath + "records.xlsx");
+            FileOutputStream output = new FileOutputStream(filePath + "Records.xlsx");
             workbook.write(output);
             output.flush();
             output.close();
         } catch (Exception e) {
-            throw new InvalidCommandException();
+            throw new IOException();
         }
     }
 }

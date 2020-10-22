@@ -13,8 +13,8 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    compile "org.apache.poi:poi:3.17"	     // For `.xls` files
-    compile "org.apache.poi:poi-ooxml:3.17"	 // For `.xlsx` files
+    compile "org.apache.poi:poi:4.1.2"	     // For `.xls` files
+    compile "org.apache.poi:poi-ooxml:4.1.2"	 // For `.xlsx` files
 }
 
 test {

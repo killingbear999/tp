@@ -7,11 +7,15 @@ import seedu.duke.command.EditCommand;
 import seedu.duke.command.AddCommand;
 import seedu.duke.command.ClearListCommand;
 import seedu.duke.command.Command;
+import seedu.duke.command.ConvertCommand;
+import seedu.duke.command.DrawCommand;
+import seedu.duke.command.EditCommand;
 import seedu.duke.command.ExitCommand;
-import seedu.duke.command.HelpCommand;
-import seedu.duke.command.SummaryCommand;
-import seedu.duke.command.RepayCommand;
 import seedu.duke.command.ExportCommand;
+import seedu.duke.command.HelpCommand;
+import seedu.duke.command.RepayCommand;
+import seedu.duke.command.SetBudgetCommand;
+import seedu.duke.command.SummaryCommand;
 import seedu.duke.command.ViewCommand;
 import seedu.duke.command.RepaymentListCommand;
 import seedu.duke.exceptions.InvalidCommandException;
@@ -33,7 +37,10 @@ public class Parser {
         SUMMARY("^summary$", "summary"),
         SUMMARY_YEAR("^summary\\s*\\d{4}$", "summaryYear"),
         SUMMARY_YEAR_MONTH("^summary\\s*\\d{4}\\s*[a-zA-Z]{3}$", "summaryYearMonth"),
-        EXPORT("^export.*$", "export");
+        EXPORT("^export.*$", "export"),
+        DRAW("^draw$", "draw"),
+        DRAW_YEAR("^draw\\s*\\d{4}$", "drawYear"),
+        DRAW_YEAR_MONTH("^draw\\s*\\d{4}\\s*[a-zA-Z]{3}$", "drawYearMonth");
 
         private final String pattern;
         private final String action;
@@ -111,6 +118,10 @@ public class Parser {
         case "set": return new SetBudgetCommand(commandParameters);
         case "repay": return new RepayCommand(commandParameters);
         case "export": return new ExportCommand(commandParameters);
+        case "draw": return new DrawCommand();
+        case "drawYear": return new DrawCommand(commandParameters);
+        case "drawYearMonth": return new DrawCommand(commandParameters.substring(0, 4),
+                commandParameters.substring(4).strip());
         case "view": return new ViewCommand();
         default: throw new InvalidCommandException();
         }
