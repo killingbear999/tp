@@ -4,6 +4,7 @@
 ## Table of Contents
 1. [Introduction](#1-introduction)
 2. [QuickStart](#2-quick-start)
+
 3. [CommandFeatures](#3-command-features)
 
     3.1 [AddingSpending: `add`](#31-adding-spending-add)
@@ -11,21 +12,39 @@
     3.2 [ClearingData: `clear`](#32-clearing-data-clear)
 
     3.3 [ViewingHelp: `help`](#33-viewing-help-help)
+    
     3.4 [PurgingData: `purge`](#34-purging-data-purge-data)
+    
     3.5 [ViewingRepaymentListSummary: `repaymentlist`](#35-viewing-repayment-list-summary-repayment-list)
+    
     3.6 [ViewingSpendingListSummary: `spendinglist`](#36-viewing-spending-list-summary-spending-list)
+    
     3.7 [ViewingBudgetLimit: `view`](#37-viewing-budget-limit-view)
+    
     3.8 [SettingBudgetLimit: `set`](#38-setting-budget-limit-set)
+    
     3.9 [InputtingRepaymentInformation: `repay`](#39-inputting-repayment-information-repay)
+    
     3.10 [ConvertingCurrency: `convert`](#310-converting-currency-convert)
+    
     3.11 [ViewingSummary: `summary`](#311-viewing-summary-summary)
+    
     3.12 [VisualizingData: `draw`](#312-visualizing-data-draw)
+    
     3.13 [ExportingData: `export`](#313-exporting-data-export)
+<<<<<<< HEAD
     3.14 [EditingSpending: `edit`](#314-editing-spending-edit)
+=======
+    
+    3.14 [EditingSpending: `edit`](#314-editing-spending-edit) 
+    
+>>>>>>> c2df006d07fe3b0222f2db684ea4772548791c26
     3.15 [ExitingProgram: `logout`](#315-exiting-program-logout)
 4. [Useful Hidden Features](#4-useful-hidden-features)
     4.1 [Reminder](#41-reminder)
+    
     4.2 [Warning](#42-warning)
+    
     4.3 [Encouragement](#43-encouragement)
 5. [FAQ](#5-faq)
 6. [Command Summary](#6-command-summary)
