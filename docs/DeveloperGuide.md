@@ -4,14 +4,14 @@
 Cent Wise Dollar Wise is a desktop application for money management, optimised for use via a Command Line Interface (CLI). This application aims to help NUS hostel students manage their financial situation and track their spending efficiently. 
 This developer guide provides information on the architecture and design of the application. It will not only help you get started as a Cent Wise Dollar Wise contributer, but that you will find useful to refer to even if you are already a contributer of this project. 
 
-## 2. Setting up
+## 2. Setting Up
 ### 2.1 Prerequisites
 - JDK 11 <br>
 - IntelliJ IDE <br>
 🛈 IntelliJ by default has Gradle and JavaFx plugins installed. <br>
 🛈 Do not disable them. If you have disabled them, go to File > Settings > Plugins to re-enable them.
 
-### 2.2 Setting up the project in your computer
+### 2.2 Setting Up the Project in your Computer
 The following are the steps to set up the project in your computer:
 1. Fork this repo, and clone the fork to your computer.
 2. Open IntelliJ. If you are not in the welcome screen, click File > Close Project to close the existing project dialog first.
@@ -24,7 +24,7 @@ The following are the steps to set up the project in your computer:
 9. Click OK to accept the default settings
 10. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the BUILD SUCCESSFUL message. This will generate all resources required by the application and tests.
 
-### 2.3 Verifying the setup
+### 2.3 Verifying the Setup
 The following are the steps to verify your setup:
 1. Run the seedu.duke.Duke and try a few commands.
 2. Run the tests and ensure all the tests pass.
@@ -35,30 +35,30 @@ The following are the steps to verify your setup:
 
 The architecture diagram above explains the high-level design of the application. Given below is a quick overview of each component:
 
-main: Initializes spending list at app launch and coordinates the interaction between other components
+`main`: Initializes spending list at app launch and coordinates the interaction between other components
 
-data: Stores the data collected from the user
+`data`: Stores the data collected from the user
 
-storage: Reads data from, and writes data to, the hard disk
+`storage`: Reads data from, and writes data to, the hard disk
 
-ui: Interacts with the user
+`ui`: Interacts with the user
 
-command: Executes the user command or system-issued command
+`command`: Executes the user command or system-issued command
 
-parser: Analyzes the user command
+`parser`: Analyzes the user command
 
-**How the architecture components interact with each other** <br>
+**How the Architecture Components Interact with Each Other** <br>
 
 The sequence diagram below shows how the components interact with each other when the user issues a general command. <br>
 
 ![image](https://user-images.githubusercontent.com/45732128/97735507-62c0d580-1b15-11eb-9f14-aab54bf5b29d.png) <br>
 
 
-### 3.2 UI component
+### 3.2 UI Component
 
-### 3.3 Parser component
+### 3.3 Parser Component
 
-### 3.4 Command component
+### 3.4 Command Component
 Every command that a user can input into the application is represented by an object that extends the abstract class `Command`. In addition, hidden commands that do not require user inputs also extends from the same abstract class `Command`. `Command` contains some basic methods that are shared by all types of commands, including:
 * execute(), which is called after setting up the object appropriately, to perform the action requested by the user; and
 * isExit(), which returns a boolean that indicates whether the program should terminate after the command is executed.
@@ -90,7 +90,7 @@ The following class diagram describes the hidden commands within the program. <b
 
 ![image](https://user-images.githubusercontent.com/45732128/97780364-28137780-1bbf-11eb-9442-caa76f3db339.png)
 
-### 3.5 Data component
+### 3.5 Data Component
 This component holds the data of the application, including the SpendingList class, Budget class and RepaymentList 
 class, in the memory.
 
@@ -105,9 +105,9 @@ Figure X:
 
 #### 3.5.2 RepaymentList
 
-### 3.6 Storage component
+### 3.6 Storage Component
 
-### 3.7 Common classes
+### 3.7 Common Classes
 
 ## 4. Implementation
 ### 4.1 Add Feature
@@ -298,7 +298,6 @@ The following sequence diagram illustrates how this feature works. <br>
 ![image](https://user-images.githubusercontent.com/45732128/97781607-99572880-1bc7-11eb-82a7-50b614572269.png) <br>
 
 ### 4.11 Export Feature
-
 `Workbook`, `FileOutputStream`, `SpendingList` and `Ui` facilitate this feature. The export data feature could extract the current data and export to an Excel file. It implements the following operations:
 * `Workbook#createSheet` → creates a sheet in the workbook
 * `SpendingList#getItem` → gets the item waiting to be added to the workbook
@@ -317,7 +316,6 @@ The following sequence diagram illustrates how this feature works. <br>
 ![image](https://user-images.githubusercontent.com/45732128/97736203-4a9d8600-1b16-11eb-9661-ce9c27ccb6a9.png) <br>
 
 ### 4.12 Draw Feature
-
 `Workbook`, `FileOutputStream`, `SpendingList` and `Ui` facilitate this feature. The draw feature analyze the target records and plot two charts accordingly. It implements the following operations:
 * `Workbook#createSheet` → creates a sheet in the workbook
 * `SpendingList#getItem` → gets the item waiting to be added to the workbook
@@ -340,20 +338,49 @@ The following sequence diagram illustrates how this feature works. <br>
 
 ![image](https://user-images.githubusercontent.com/59434361/97977429-2b993f80-1e07-11eb-8b57-c6c72eb7e11c.png) <br>
 
-## 5. Product scope
-### 5.1 Target user profile
+## 5 Dev Ops
+### 5.1 Build Automation
+This project uses Gradle for build automation and dependency management. <br>
 
+Given below are how to use Gradle for some important project tasks: <br>
+
+* `clean`: Deletes the files created during the previous build tasks (e.g. files in the build folder). e.g. ./gradlew clean
+* `shadowJar`: Uses the ShadowJar plugin to creat a fat JAR file in the build/lib folder, if the current file is outdated. e.g. ./gradlew shadowJar
+* `run`: Builds and run the program. 
+* `runShadow`: Builds the application as a fat JAR, and then runs it.
+* `checkstyleMain`: Runs the code style check for the main code base. 
+* `checkstyleTest`: Runs the code style check for the test code base.
+* `test`: Runs all tests.
+  * `./gradlew test` — Runs all tests
+  * `./gradlew clean test` — Cleans the project and runs tests
+
+### 5.2 Continuous Integration (CI)
+This project uses GitHub Actions for CI. The project comes with the necessary GitHub Actions configurations files (in the .github/workflows folder). 
+
+### 5.3 Making a release
+Here are the steps to create a new release:
+
+1. Generate a fat JAR file using Gradle by using the command `gradlew shadow` (Mac/Linux: `./gradlew clean shadowJar`).
+2. Find the JAR file in the `build/libs` directory.
+3. Tag the repository with a new version number.
+4. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/). Upload the JAR file you created.
+
+### 5.4 Coverage Reporting
+We use the IntelliJ IDEA’s coverage analysis tool for coverage reporting. A video tutorial on how to use this tool can be found [here](https://www.youtube.com/watch?v=yNYzZvyA2ik&feature=youtu.be).
+
+## Appendix A: About the Product
+### Target User Profile
 The target user is NUS hostel students including both local students and international students.
 
-### 5.2 Value proposition
-
+### Value Proposition
 We observed that hostel students are encountering tight budgets due to expensive hostel fees, on top of their school 
 tuition fees. Hence, we are developing a money manager targeted at NUS hostel students. This money manager   
 Cent Wise Dollar Wise aims to help hostel students to have better financial management with limited budget. 
 
-## 6. User Stories
+## Appendix B: User Stories
+This table describes the user stories considered while implementing the features in Section 4: <br>
 
-|Version| As a ... | I want to ... | So that I can ...|
+|Version| As a (/an) ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
 |v1.0|international student|convert local currency to foreign currency or the reverse way|trace my spending easily|
 |v1.0|careless user|view and reset the previous input|ensure the data input is correct|
@@ -364,17 +391,16 @@ Cent Wise Dollar Wise aims to help hostel students to have better financial mana
 |v2.0|user|have weekly reminders on how much has spent|take note of future spending|
 |v2.0|forgetful user|include a list to summarise the repayment to others|repay the debt on time|
 
-## 7. Non-Functional Requirements
+## Appendix C: Non-Functional Requirements
+The following statements describe the non-functional requirements for the application: <br>
 
 1. The system should respond within two seconds.
 2. The system should be easy to use, do not require much effort to learn.
-3. The system should work on any mainstream OS that has Java 11 or above installed.
+3. The system should work on any *mainstream* OS that has Java 11 or above installed.
 4. Users with faster typing speed than average should be able to use this program with ease.
 
-## 8. Glossary
+## Appendix D: Glossary
+* Mainstream OS: Windows, Linux, macOS
 
-* *glossary item* - Definition
-
-## 9. Instructions for manual testing
-
+## Appendix E: Instructions for manual testing
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}

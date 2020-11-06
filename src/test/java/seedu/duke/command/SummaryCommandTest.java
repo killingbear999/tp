@@ -3,6 +3,7 @@ package seedu.duke.command;
 import org.junit.jupiter.api.Test;
 
 import seedu.duke.data.SpendingList;
+import seedu.duke.exceptions.InvalidYearException;
 import seedu.duke.ui.Ui;
 import seedu.duke.data.Item;
 import seedu.duke.exceptions.InvalidMonthException;
@@ -35,12 +36,14 @@ public class SummaryCommandTest {
         try {
             invalidSummaryMonth.execute(spendingList, null, ui);
         } catch (InvalidMonthException e) {
-            assertEquals("Invalid month input.", e.toString());
+            assertEquals("Sorry, your month input is invalid. Please re-enter the month.", e.toString());
+        } catch (InvalidYearException e) {
+            assertEquals("Sorry, your year input is invalid. Please re-enter the year.", e.toString());
         }
     }
 
     @Test
-    public void goodSummary() throws InvalidMonthException {
+    public void goodSummary() throws InvalidMonthException, InvalidYearException {
         Ui ui = new Ui();
         SummaryCommand validSummaryMonth = new SummaryCommand("2020", "Jan");
         SummaryCommand summaryYear = new SummaryCommand("2020", null);

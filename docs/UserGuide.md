@@ -5,42 +5,27 @@
 1. [Introduction](#1-introduction)
 2. [QuickStart](#2-quick-start)
 3. [CommandFeatures](#3-command-features)
-    
+
     3.1 [AddingSpending: `add`](#31-adding-spending-add)
-     
+
     3.2 [ClearingData: `clear`](#32-clearing-data-clear)
-     
+
     3.3 [ViewingHelp: `help`](#33-viewing-help-help)
-
     3.4 [PurgingData: `purge`](#34-purging-data-purge-data)
-
     3.5 [ViewingRepaymentListSummary: `repaymentlist`](#35-viewing-repayment-list-summary-repayment-list)
-
     3.6 [ViewingSpendingListSummary: `spendinglist`](#36-viewing-spending-list-summary-spending-list)
-
     3.7 [ViewingBudgetLimit: `view`](#37-viewing-budget-limit-view)
-
     3.8 [SettingBudgetLimit: `set`](#38-setting-budget-limit-set)
-
     3.9 [InputtingRepaymentInformation: `repay`](#39-inputting-repayment-information-repay)
-
     3.10 [ConvertingCurrency: `convert`](#310-converting-currency-convert)
-
     3.11 [ViewingSummary: `summary`](#311-viewing-summary-summary)
-
     3.12 [VisualizingData: `draw`](#312-visualizing-data-draw)
-
     3.13 [ExportingData: `export`](#313-exporting-data-export)
-
     3.14 [EditingSpending: `edit`](#314-editing-spending-edit)
-    
     3.15 [ExitingProgram: `logout`](#315-exiting-program-logout)
 4. [Useful Hidden Features](#4-useful-hidden-features)
-
     4.1 [Reminder](#41-reminder)
-    
     4.2 [Warning](#42-warning)
-    
     4.3 [Encouragement](#43-encouragement)
 5. [FAQ](#5-faq)
 6. [Command Summary](#6-command-summary)
@@ -48,8 +33,8 @@
 --------------------------------------------------------------------------------------------------------------------
 
 ## **1. Introduction**
-Welcome to Cent Wise Dollar Wise User Guide! Cent Wise Dollar Wise is a desktop application for money management, optimised for use via a Command Line Interface (CLI). This application aims to help NUS hostel students manage their financial situation and track their spending efficiently. 
-This user guide provides in-depth documentation on the application’s installation process and command features. 
+Welcome to Cent Wise Dollar Wise User Guide! Cent Wise Dollar Wise is a desktop application for money management, optimised for use via a Command Line Interface (CLI). This application aims to help NUS hostel students manage their financial situation and track their spending efficiently.
+This user guide provides in-depth documentation on the application’s installation process and command features.
 
 ## **2. Quick Start**
 1. Ensure that you have Java 11 or above installed in your computer.
@@ -58,7 +43,7 @@ This user guide provides in-depth documentation on the application’s installat
 4. Open a terminal in that home folder and enter java -jar duke.jar to begin.
 5. Type the desired command and press Enter to execute it. Tips: entering help will display the help window with a list of commands that could be executed.
 
-Refer to the Features below for details of each command.
+Refer to the [Command Features](#3-command-features) below for details of each command.
 
 ## **3. Command Features**
 In this section, specific information about each command will be explained. This includes the purpose of each command, and how it is formatted.
@@ -88,7 +73,7 @@ letter is capitalised. Example: `Jul` for July or `Oct` for October.
     6. Utilities
 
 Note: If you categorise an item in a category that is not from these six, the item will be categorised as Others.
-    
+
 ### 3.1 Adding Spending: `add`
 This command allows you to add a spending record to the application.
 
@@ -96,18 +81,19 @@ Format:
 
 `add -c CATEGORY -d DESCRIPTION -s CURRENCY SPENDING`
 
-Example of usage: 
+Example of usage:
 
 `add -c Food -d chicken rice -s SGD 3.00` → adds chicken rice which costs SGD 3.00 into the food category of the spending list
 
 Figure below shows an example for Adding Spending Feature: <br>
 
 ![image](https://user-images.githubusercontent.com/45732128/98068206-6302fd00-1e96-11eb-9f94-af0daeed3175.png)
+🛈 The date shown in the UI output refers to the date when an entry is recorded.
 
 ### 3.2 Clearing Data: `clear`
-The `clear` command allows you to clear specific data that you have stored in the application. This includes your spending list, repayment list and budget. You can choose to clear all entries or specified entries of either your spending list or repayment list (or both). 
+The `clear` command allows you to clear specific data that you have stored in the application. This includes your spending list, repayment list and budget. You can choose to clear all entries or specified entries of either your spending list or repayment list (or both).
 
-🛈 If you do not specify SPENDING_INDEX or REPAYMENT_INDEX but specify its corresponding prefix, the whole list representing it will be cleared
+🛈 If you do not specify SPENDING_INDEX or REPAYMENT_INDEX but specify its corresponding prefix, the whole list representing it will be cleared.
 
 Format:
 
@@ -199,7 +185,7 @@ Figure below shows an example for Viewing Budget Limit feature (i.e. budget limi
 ![Example for Viewing Budget Limit](images/BudgetExample.png)
 
 ### 3.8 Setting Budget Limit: `set`
-This command allows you to set a budget limit. You will receive a Ui warning message when your spending approaches 
+This command allows you to set a budget limit. You will receive a Ui warning message when your spending approaches
 the limit or exceeds the limit.
 
 Format:
@@ -219,7 +205,7 @@ Format:
 
 Example of usage:
 
-`repay -n Johnny -s SGD 5.0 -t 2020-12-02` → stores the information that you need to repay SGD 5.0 to Johnny before 
+`repay -n Johnny -s SGD 5.0 -t 2020-12-02` → stores the information that you need to repay SGD 5.0 to Johnny before
 2020-12-02
 
 Figure below shows an example for Inputting Repayment Information feature: <br>
@@ -229,7 +215,7 @@ Figure below shows an example for Inputting Repayment Information feature: <br>
 ### 3.10 Converting Currency: `convert`
 This command converts the currency in your spending list to another currency you prefer.
 
-Format: 
+Format:
 
 `convert -s INPUT_CURRENCY -t OUTPUT_CURRENCY`
 
@@ -242,32 +228,32 @@ Figure below shows an example for Converting Currency feature: <br>
 ![Example for Converting Currency](images/ConvertExample.png)
 
 ### 3.11 Viewing Summary: `summary`
-This command generates a statement of your total expenditure during a specific period of time (a particular year or 
+This command generates a statement of your total expenditure during a specific period of time (a particular year or
 month, or both). Statements based on each spending category will also be shown.
 
-Format: 
+Format:
 
 `summary [YEAR] [MONTH] [-a]`
 
 Examples of usage:
 
-`summary` → shows summary of current month 
+`summary` → shows summary of current month
 
-`summary 2020` → shows summary of a specific year 
+`summary 2020` → shows summary of a specific year
 
 `summary 2020 Oct` → shows summary of a specific year and month
 
 `summary -a` → shows the summary of total expenditure
 
-### 3.12 Visualizing Data: `draw` 
+### 3.12 Visualizing Data: `draw`
 
 This command generates graphs showing your spending records of a particular year or month. The graphs will be in an Excel file at the same folder of this application.
 
-Format: 
+Format:
 
 `draw [YEAR] [MONTH]`
 
-Examples of usage: 
+Examples of usage:
 
 `draw` → shows the graph of current month
 
@@ -275,15 +261,15 @@ Examples of usage:
 
 `draw 2020 Jun` → shows the graph of Jun 2020
 
-### 3.13 Exporting Data: `export` 
+### 3.13 Exporting Data: `export`
 
 This command exports the data to an Excel file at the given location.
 
-Format: 
+Format:
 
 `export PATH`
 
-Example of usage: 
+Example of usage:
 
 `export F:\MyFolder exports` → the records to an Excel file located at F:\MyFolder
 
@@ -315,7 +301,7 @@ Example of usage:
 
 ## **4. Useful Hidden Features**
 This section shows you the hidden features which serve as notifications and interactions with the user.
-### 4.1 Reminder 
+### 4.1 Reminder
 Reminds you about your weekly expenditures, and the amount of budget left when you start the application.
 It will also warn you if you are reaching your budget limit. <br>
 
@@ -324,7 +310,7 @@ It will also warn you if you are reaching your budget limit. <br>
 Note: A new week starts on Monday.
 
 ### 4.2 Warning
-Warns you when you are about to overspend. The budget threshold is 90% of your budget set. After you add a spending 
+Warns you when you are about to overspend. The budget threshold is 90% of your budget set. After you add a spending
 item and the total expenditure is more than the budget threshold, warning message will appear. <br>
 
 ![reminder message](images/warningMessage.png)
@@ -340,7 +326,7 @@ Figure below shows an example of encouragement message. <br>
 
 ## **5. FAQ**
 
-**Q**: How do I transfer my data to another computer? 
+**Q**: How do I transfer my data to another computer?
 
 **A**: Install the app in the other computer and copy the data/duke.json to the same folder. When you start the app, it will automatically detect and load the backup data.
 

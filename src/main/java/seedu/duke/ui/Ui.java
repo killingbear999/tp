@@ -17,7 +17,7 @@ public class Ui {
     private Scanner in;
     private PrintStream out;
     private static final String SEPARATE_LINE_CHAR = "-";
-    private static final int SEPARATE_LINE_LENGTH = 108;
+    private static final int SEPARATE_LINE_LENGTH = 115;
     private static final String LOGO = "  _____         __ _      ___              \n"
             + " / ___/__ ___  / /| | /| / (_)__ ___       \n"
             + "/ /__/ -_) _ \\/ __/ |/ |/ / (_-</ -_)      \n"

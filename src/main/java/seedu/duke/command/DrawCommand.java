@@ -39,6 +39,7 @@ public class DrawCommand extends DateCommand {
     private final String filePath = "Charts.xlsx";
     private final FileExplorer fileExplorer = new FileExplorer(filePath);
     private boolean isOpening;
+    private boolean parameterIsValid = true;
     private String timePeriod;
 
     public DrawCommand() {
@@ -54,6 +55,10 @@ public class DrawCommand extends DateCommand {
     public DrawCommand(String year, String month) {
         String convertedMonth = dateFormatter.changeMonthFormat(month);
         if (convertedMonth == null) {
+            if (!(month == null)) {
+                parameterIsValid = false;
+                return;
+            }
             timePeriod = year;
         } else {
             timePeriod = year + "-" + convertedMonth;
@@ -64,6 +69,10 @@ public class DrawCommand extends DateCommand {
     public DrawCommand(String year, String month, boolean isOpening) {
         String convertedMonth = dateFormatter.changeMonthFormat(month);
         if (convertedMonth == null) {
+            if (!(month == null)) {
+                parameterIsValid = false;
+                return;
+            }
             timePeriod = year;
         } else {
             timePeriod = year + "-" + convertedMonth;
@@ -73,6 +82,11 @@ public class DrawCommand extends DateCommand {
 
     @Override
     public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) {
+        if (!parameterIsValid) {
+            ui.printDrawMessage(false);
+            return;
+        }
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet0 = workbook.createSheet("Sheet 0");
         XSSFSheet sheet1 = workbook.createSheet("Sheet 1");
@@ -80,6 +94,7 @@ public class DrawCommand extends DateCommand {
         sheet1.setDefaultColumnWidth(5);
         ArrayList<Item> items = new ArrayList<>();
         SpendingList targetSpendingList = new SpendingList(items);
+
         for (int i = 0; i < spendingList.getListSize(); i++) {
             if (spendingList.getItem(i).getDate().startsWith(timePeriod)) {
                 targetSpendingList.getSpendingList().add(spendingList.getItem(i));
@@ -96,12 +111,12 @@ public class DrawCommand extends DateCommand {
             }
             Integer[] dates = dateMap.keySet().toArray(new Integer[0]);
             Double[] amountsForDates = dateMap.values().toArray(new Double[0]);
-            drawChart(sheet0, dates, amountsForDates, 0, 0, 10, 15);
+            drawChart(sheet0, dates, amountsForDates, 0, 0, 15, 10);
 
             TreeMap<String, Double> categoryMap = getCategoryMap(targetSpendingList);
             String[] categories = categoryMap.keySet().toArray(new String[0]);
             Double[] amountsForCategories = categoryMap.values().toArray(new Double[0]);
-            drawChart(sheet1, categories, amountsForCategories, 0, 0, 10, 12);
+            drawChart(sheet1, categories, amountsForCategories, 0, 0, 8, 12);
 
             try {
                 FileOutputStream fileOut = new FileOutputStream(filePath);
@@ -189,7 +204,7 @@ public class DrawCommand extends DateCommand {
     private TreeMap<Integer, Double> getDayMap(SpendingList spendingList) {
         TreeMap<Integer, Double> map = new TreeMap<>();
         final int minDay = 1;
-        final int maxDay = 12;
+        final int maxDay = 31;
         for (int i = 0; i < spendingList.getListSize(); i++) {
             Item item = spendingList.getItem(i);
             int day = Integer.parseInt(item.getDate().substring(8, 10));
