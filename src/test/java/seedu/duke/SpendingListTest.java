@@ -1,12 +1,12 @@
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.data.Data;
 import seedu.duke.data.Item;
 import seedu.duke.data.SpendingList;
 import seedu.duke.storage.Storage;
 
 import java.io.IOException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,16 +144,17 @@ class SpendingListTest {
 
         assertEquals(realList.getSpendingAmountTime(expectedYear), expectedAmount);
     }
-    
+
     //@@author killingbear999
     @Test
     public void getCurrentAmountTest() {
         double expectedAmount = 20.0;
+        Data data = new Data(null, null, null);
         SpendingList realList = initSpendingList(
                 new Item("sushi", "S$", 11.0, ""),
                 new Item("bubble tea", "S$", 4.0, ""),
                 new Item("medicine", "S$", 5.0, "")
         );
-        assertEquals(realList.getCurrentAmount(), expectedAmount);
+        assertEquals(realList.getCurrentAmount(data), expectedAmount);
     }
 }

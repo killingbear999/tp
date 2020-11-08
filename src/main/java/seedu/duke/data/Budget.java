@@ -1,45 +1,67 @@
 package seedu.duke.data;
 
+import seedu.duke.storage.Storage;
+
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Budget {
-    private static double budgetLimit;
-    private static String currency = "SGD";
-    public static boolean hasBudget;
-    public static String date = "1000-01-01";
+    private double budgetLimit;
+    private String currency = "SGD";
+    public boolean hasBudget;
+    public String date = "1000-01-01";
+    public Storage storage;
 
-    public static double getBudgetLimit() {
+    public Budget(Storage storage) {
+        this.storage = storage;
+    }
+
+    public Budget() {
+        this(null);
+    }
+
+    public double getBudgetLimit() {
         return budgetLimit;
     }
 
-    public static String getCurrency() {
+    public String getCurrency() {
         return currency;
     }
-    
-    public static String getDate() {
+
+    public String getDate() {
         return date;
     }
 
-    public static void addBudget(String currency, double budgetLimit) {
-        Budget.currency = currency;
-        Budget.budgetLimit = budgetLimit;
-        Budget.hasBudget = true;
-        Budget.date = currentDate();
+    public void addBudget(String currency, double budgetLimit) throws IOException {
+        this.currency = currency;
+        this.budgetLimit = budgetLimit;
+        hasBudget = true;
+        date = currentDate();
+        save();
     }
 
-    public static void updateBudget(String outputCurrency, double newBudgetLimit) {
-        Budget.currency = outputCurrency;
-        Budget.budgetLimit = newBudgetLimit;
+    public void updateBudget(String outputCurrency, double newBudgetLimit) throws IOException {
+        currency = outputCurrency;
+        budgetLimit = newBudgetLimit;
+        save();
     }
 
-    public static void clearBudget() {
-        Budget.currency = "SGD";
-        Budget.budgetLimit = 0;
-        Budget.hasBudget = false;
+    public void clearBudget() throws IOException {
+        currency = "SGD";
+        budgetLimit = 0;
+        hasBudget = false;
+        save();
     }
-    
-    protected static String currentDate() {
+
+    protected String currentDate() {
         LocalDate date = LocalDate.now();
         return date.toString();
+    }
+
+    public void save() throws IOException {
+        if (storage == null) {
+            return;
+        }
+        storage.save(this);
     }
 }

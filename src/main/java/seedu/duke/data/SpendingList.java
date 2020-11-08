@@ -129,10 +129,10 @@ public class SpendingList {
     }
     
     //@@author killingbear999
-    public double getCurrentAmount() {
+    public double getCurrentAmount(Data data) {
         double currentAmount = 0;
         for (Item i: spendingList) {
-            if (i.getDate().compareTo(Budget.getDate()) >= 0) {
+            if (i.getDate().compareTo(data.budget.getDate()) >= 0) {
                 currentAmount += i.getAmount();
             }
         }

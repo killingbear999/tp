@@ -1,13 +1,13 @@
 package seedu.duke.command;
 
-import seedu.duke.data.Budget;
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.exceptions.InvalidBudgetException;
 import seedu.duke.exceptions.InvalidInputCurrencyException;
 import seedu.duke.ui.Ui;
 import seedu.duke.utilities.AmountConverter;
 import seedu.duke.utilities.DecimalFormatter;
+
+import java.io.IOException;
 
 //@@author killingbear999
 public class SetBudgetCommand extends Command {
@@ -23,11 +23,11 @@ public class SetBudgetCommand extends Command {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui)
-            throws InvalidInputCurrencyException, InvalidBudgetException {
-        int size = spendingList.getListSize();
+    public void execute(Data data, Ui ui)
+        throws InvalidInputCurrencyException, InvalidBudgetException, IOException {
+        int size = data.spendingList.getListSize();
         if (size != 0) {
-            defaultCurrency = spendingList.getItem(0).getSymbol();
+            defaultCurrency = data.spendingList.getItem(0).getSymbol();
         }
         if (!currency.equals(defaultCurrency)) {
             AmountConverter amountConverter = new AmountConverter(currency, budgetLimit, defaultCurrency);
@@ -42,7 +42,7 @@ public class SetBudgetCommand extends Command {
         }
         DecimalFormatter decimalFormatter = new DecimalFormatter();
         budgetLimit = decimalFormatter.convert(budgetLimit);
-        Budget.addBudget(currency, budgetLimit);
+        data.budget.addBudget(currency, budgetLimit);
         ui.printBudgetLimit(currency, budgetLimit);
     }
 }

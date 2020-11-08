@@ -3,12 +3,14 @@ package seedu.duke;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.duke.data.Budget;
 import seedu.duke.data.SpendingList;
 import seedu.duke.exceptions.InvalidStorageFileExtensionException;
 import seedu.duke.exceptions.InvalidStorageFilePathException;
 import seedu.duke.storage.Storage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -51,8 +53,19 @@ class StorageTest {
         SpendingListTest.assertEqualList(expectedList, actualList);
     }
 
+    @Test
+    public void saveAndLoadBudget() throws IOException {
+        Budget expectedBudget = new Budget(storage);
+        expectedBudget.addBudget("SGD", 1.23);
+
+        Budget actualBudget = storage.loadBudget();
+        assertEquals("SGD", actualBudget.getCurrency());
+        assertEquals(1.23, actualBudget.getBudgetLimit());
+    }
+
     @BeforeEach
-    public void initStorage() throws InvalidStorageFilePathException, InvalidStorageFileExtensionException {
+    public void initStorage() throws InvalidStorageFilePathException, InvalidStorageFileExtensionException,
+        FileNotFoundException {
         String randomPath = String.format("data/%s.json", UUID.randomUUID().toString());
         storage = new Storage(randomPath);
     }
@@ -65,5 +78,3 @@ class StorageTest {
         f.deleteOnExit();
     }
 }
-
-

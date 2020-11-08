@@ -1,11 +1,15 @@
 @startuml
 hide footbox
 
--> ":SummaryCommand": execute(spendingList, repaymentList, ui)
+
+
+-> ":SummaryCommand": execute(data, ui)
 activate ":SummaryCommand"
 
-":SummaryCommand" -> ":SpendingList": getSpendingAmount(period)
+":SummaryCommand" -> ":SpendingList": getSpendingAmountTime(period)
 activate ":SpendingList"
+
+":SpendingList" -> ":SpendingList" : amountSpent = 0
 
 loop spendingList.size() times
 
@@ -20,7 +24,7 @@ opt period == date
 activate ":Item"
 ":Item" --> ":SpendingList": amount
 deactivate ":Item"
-
+":SpendingList" -> ":SpendingList" : amountSpent += amount
 end
 
 end
@@ -35,6 +39,7 @@ deactivate ":Ui"
 loop each category item
 ":SummaryCommand" -> ":SpendingList": getSpendingAmountCategory(period, category)
 activate ":SpendingList"
+":SpendingList" -> ":SpendingList" : amountSpent = 0
 
 loop spendingList.size() times
 ":SpendingList" -> ":Item": getDate()
@@ -52,9 +57,9 @@ opt period == date && c.toString() == category
 activate ":Item"
 ":Item" --> ":SpendingList": amount
 deactivate ":Item"
+":SpendingList" -> ":SpendingList" : amountSpent += amount
 end
 end
-
 
 ":SpendingList" --> ":SummaryCommand": amountSpent
 deactivate ":SpendingList"
@@ -67,4 +72,6 @@ end
 
 <-- ":SummaryCommand"
 deactivate ":SummaryCommand"
+
+
 @enduml

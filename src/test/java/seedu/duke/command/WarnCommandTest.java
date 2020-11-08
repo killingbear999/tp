@@ -1,11 +1,12 @@
 package seedu.duke.command;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.data.Budget;
+import seedu.duke.data.Data;
+import seedu.duke.data.Item;
 import seedu.duke.data.SpendingList;
 import seedu.duke.ui.Ui;
-import seedu.duke.data.Item;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,18 +27,20 @@ public class WarnCommandTest {
     );
     
     @Test
-    public void approachLimit() {
+    public void approachLimit() throws IOException {
         Ui ui = new Ui();
-        Budget.addBudget("SGD", 20.0);
+        Data data = new Data(null, null, null);
+        data.budget.addBudget("SGD", 20.0);
         WarnCommand approachingLimit = new WarnCommand();
-        approachingLimit.execute(realList, null, ui);
+        approachingLimit.execute(data, ui);
     }
     
     @Test
-    public void exceedLimit() {
+    public void exceedLimit() throws IOException {
         Ui ui = new Ui();
-        Budget.addBudget("SGD", 10.0);
+        Data data = new Data(null, null, null);
+        data.budget.addBudget("SGD", 10.0);
         WarnCommand exceedingLimit = new WarnCommand();
-        exceedingLimit.execute(realList, null, ui);
+        exceedingLimit.execute(data, ui);
     }
 }

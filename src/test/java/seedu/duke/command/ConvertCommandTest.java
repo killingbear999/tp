@@ -1,6 +1,7 @@
 package seedu.duke.command;
 
 import org.junit.jupiter.api.Test;
+import seedu.duke.data.Data;
 import seedu.duke.data.SpendingList;
 import seedu.duke.exceptions.EmptyListException;
 import seedu.duke.exceptions.InvalidCurrencyException;
@@ -34,6 +35,7 @@ public class ConvertCommandTest {
                                              InvalidCurrencyException, EmptyListException {
         Ui ui = new Ui();
         ConvertCommand convertCommand = new ConvertCommand("SGD", "USD");
-        convertCommand.execute(realList, null, ui);
+        Data data = new Data(realList, null, null);
+        convertCommand.execute(data, ui);
     }
 }

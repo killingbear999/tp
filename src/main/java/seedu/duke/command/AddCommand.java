@@ -1,15 +1,13 @@
 package seedu.duke.command;
 
-import seedu.duke.data.Budget;
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.exceptions.InvalidAmountException;
 import seedu.duke.exceptions.InvalidInputCurrencyException;
 import seedu.duke.exceptions.InvalidNameException;
+import seedu.duke.ui.Ui;
 import seedu.duke.utilities.AmountConverter;
 import seedu.duke.utilities.DecimalFormatter;
 import seedu.duke.utilities.SpendingListCategoriser;
-import seedu.duke.ui.Ui;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -32,12 +30,12 @@ public class AddCommand extends Command {
     
     //@@author killingbear999
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws IOException,
+    public void execute(Data data, Ui ui) throws IOException,
             InvalidInputCurrencyException, InvalidAmountException, InvalidNameException {
         logger.log(Level.FINE, "going to add item");
-        int size = spendingList.getListSize();
+        int size = data.spendingList.getListSize();
         if (size != 0) {
-            defaultCurrency = spendingList.getItem(0).getSymbol();
+            defaultCurrency = data.spendingList.getItem(0).getSymbol();
         }
         if (!currency.equals(defaultCurrency)) {
             AmountConverter amountConverter = new AmountConverter(currency, amount, defaultCurrency);
@@ -56,23 +54,23 @@ public class AddCommand extends Command {
         
         DecimalFormatter decimalFormatter = new DecimalFormatter();
         amount = decimalFormatter.convert(amount);
-        spendingList.addItem(description, currency, amount, category);
-        ui.printAdd(spendingList);
+        data.spendingList.addItem(description, currency, amount, category);
+        ui.printAdd(data.spendingList);
 
         
         if (size > 1) {
             SpendingListCategoriser spendingListCategoriser = new SpendingListCategoriser();
-            spendingListCategoriser.execute(spendingList);
+            spendingListCategoriser.execute(data.spendingList);
         }
         
-        if (size % 4 == 0) {
+        if (size > 0 && size % 4 == 0) {
             EncouragementCommand encouragementCommand = new EncouragementCommand();
-            encouragementCommand.execute(spendingList, null, ui);
+            encouragementCommand.execute(data, ui);
         }
         
-        if (Budget.hasBudget) {
+        if (data.budget.hasBudget) {
             WarnCommand warnCommand = new WarnCommand();
-            warnCommand.execute(spendingList, null, ui);
+            warnCommand.execute(data, ui);
         }
     }
     

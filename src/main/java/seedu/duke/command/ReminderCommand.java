@@ -1,35 +1,33 @@
 package seedu.duke.command;
 
-import seedu.duke.data.Budget;
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.ui.Ui;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Reminder extends Command {
+public class ReminderCommand extends Command {
     private LocalDate startWeek;
     private WarnCommand warn;
     private ArrayList<String> week = new ArrayList<>();
 
-    public Reminder() {
+    public ReminderCommand() {
         saveDatesToList();
         warn = new WarnCommand();
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) {
+    public void execute(Data data, Ui ui) {
         double amountRemained = 0;
-        if (Budget.hasBudget) {
-            warn.execute(spendingList, null, ui);
-            amountRemained = findRemainingAmount(spendingList);
+        if (data.budget.hasBudget) {
+            warn.execute(data, ui);
+            amountRemained = findRemainingAmount(data);
         }
 
         double totalAmountSpent = 0;
         for (String i: week) {
-            totalAmountSpent += spendingList.getSpendingAmountTime(i);
+            totalAmountSpent += data.spendingList.getSpendingAmountTime(i);
         }
 
         ui.printReminderMessage(totalAmountSpent, amountRemained, startWeek.toString());
@@ -74,9 +72,9 @@ public class Reminder extends Command {
         }
     }
 
-    public double findRemainingAmount(SpendingList spendingList) {
-        double budgetLimit = Budget.getBudgetLimit();
-        double currentAmount = spendingList.getCurrentAmount();
+    public double findRemainingAmount(Data data) {
+        double budgetLimit = data.budget.getBudgetLimit();
+        double currentAmount = data.spendingList.getCurrentAmount(data);
         return budgetLimit - currentAmount;
     }
 }

@@ -1,9 +1,7 @@
 package seedu.duke.command;
 
-import seedu.duke.data.Budget;
-import seedu.duke.data.RepaymentList;
+import seedu.duke.data.Data;
 import seedu.duke.data.Item;
-import seedu.duke.data.SpendingList;
 import seedu.duke.exceptions.EmptyListException;
 import seedu.duke.exceptions.InvalidCurrencyException;
 import seedu.duke.exceptions.InvalidInputCurrencyException;
@@ -13,15 +11,14 @@ import seedu.duke.utilities.DecimalFormatter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //@@author killingbear999
 public class ConvertCommand extends Command {
     private String currencies;
     private String outputCurrency;
     private String inputCurrency;
-    private Item currentString;
     private double exchangeRate = 1.0;
     public static ArrayList<Item> newSpendingList = new ArrayList<>();
     private static Logger logger = Logger.getLogger("ConvertCommand");
@@ -65,12 +62,12 @@ public class ConvertCommand extends Command {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws IOException,
+    public void execute(Data data, Ui ui) throws IOException,
             InvalidInputCurrencyException, InvalidOutputCurrencyException, InvalidCurrencyException,
             EmptyListException {
         if (outputCurrency.equals("SGD") || outputCurrency.equals("USD") || outputCurrency.equals("CNY")) {
             if (inputCurrency.equals("SGD") || inputCurrency.equals("USD") || inputCurrency.equals("CNY")) {
-                convert(spendingList, ui);
+                convert(data, ui);
             } else {
                 throw new InvalidInputCurrencyException();
             }
@@ -79,16 +76,16 @@ public class ConvertCommand extends Command {
         }
     }
     
-    private void convert(SpendingList spendingList, Ui ui) throws IOException, InvalidCurrencyException,
+    private void convert(Data data, Ui ui) throws IOException, InvalidCurrencyException,
             EmptyListException {
-        int size = spendingList.getListSize();
+        int size = data.spendingList.getListSize();
         if (size == 0) {
             throw new EmptyListException();
         }
-        String defaultCurrency = spendingList.getItem(0).getSymbol();
+        String defaultCurrency = data.spendingList.getItem(0).getSymbol();
         if (inputCurrency.equals(defaultCurrency)) {
             logger.log(Level.FINE, "going to start processing");
-            newSpendingList = spendingList.getSpendingList();
+            newSpendingList = data.spendingList.getSpendingList();
             currencies = identifyCurrency();
             findExchangeRate();
             updateList();
@@ -97,8 +94,8 @@ public class ConvertCommand extends Command {
             } else {
                 throw new InvalidCurrencyException();
             }
-            spendingList.updateSpendingList();
-            updateBudgetList();
+            data.spendingList.updateSpendingList();
+            updateBudgetList(data);
             logger.log(Level.FINE, "end of processing");
         } else {
             ui.printInvalidConversion(defaultCurrency);
@@ -106,11 +103,10 @@ public class ConvertCommand extends Command {
     }
     
     private void updateList() {
-        for (int i = 0; i < newSpendingList.size(); i++) {
-            currentString = newSpendingList.get(i);
-            if (!currentString.getSymbol().equals(outputCurrency)) {
-                updateNewAmount(currentString);
-                updateCurrency(currentString);
+        for (Item item : newSpendingList) {
+            if (!item.getSymbol().equals(outputCurrency)) {
+                updateNewAmount(item);
+                updateCurrency(item);
             }
         }
     }
@@ -141,11 +137,11 @@ public class ConvertCommand extends Command {
         }
     }
     
-    public void updateBudgetList() {
-        if (!Budget.getCurrency().equals(outputCurrency)) {
-            double budgetLimit = Budget.getBudgetLimit();
+    public void updateBudgetList(Data data) throws IOException {
+        if (data.budget.getCurrency().equals(outputCurrency)) {
+            double budgetLimit = data.budget.getBudgetLimit();
             double newBudgetLimit = budgetLimit * exchangeRate;
-            Budget.updateBudget(outputCurrency, newBudgetLimit);
+            data.budget.updateBudget(outputCurrency, newBudgetLimit);
         }
     }
 

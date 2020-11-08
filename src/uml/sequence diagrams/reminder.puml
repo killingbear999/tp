@@ -1,0 +1,50 @@
+@startuml
+hide footbox
+
+":Duke" -> ":ReminderCommand"
+create ":ReminderCommand"
+":Duke" -> ":ReminderCommand"
+activate ":ReminderCommand"
+
+":ReminderCommand" -> ":ReminderCommand" : saveDatesToList()
+activate ":ReminderCommand"
+":ReminderCommand" --> ":ReminderCommand"
+deactivate ":ReminderCommand"
+":ReminderCommand" --> ":Duke"
+deactivate ":ReminderCommand"
+
+
+->":ReminderCommand" : execute(data, ui)
+
+activate ":ReminderCommand"
+
+opt data.budget.hasBudget
+":ReminderCommand" -> ":WarnCommand" : execute(data, ui)
+activate ":WarnCommand"
+":WarnCommand" --> ":ReminderCommand"
+deactivate ":WarnCommand"
+end
+
+loop week.size() times
+
+":ReminderCommand" -> ":SpendingList" : getSpendingAmountTime(period)
+activate ":SpendingList"
+":SpendingList" --> ":ReminderCommand" : amountSpent
+deactivate ":SpendingList"
+
+end
+
+":ReminderCommand" -> ":ReminderCommand" : findRemainingAmount(data)
+activate ":ReminderCommand"
+":ReminderCommand" --> ":ReminderCommand" : amountRemained
+deactivate ":ReminderCommand"
+
+
+":ReminderCommand" -> ":Ui" : printReminderMessage(totalAmountSpent,amountRemained,startWeek.toString())
+activate ":Ui"
+":Ui" --> ":ReminderCommand"
+deactivate ":Ui"
+<-- ":ReminderCommand"
+deactivate ":ReminderCommand"
+
+@enduml

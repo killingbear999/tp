@@ -8,7 +8,7 @@ class "{abstract} \n Command"{
     + isExit(): boolean
 }
 
-class "Reminder" {
+class "ReminderCommand" {
     - startWeek: LocalDate
     - warn: WarnCommand
     - week: ArrayList<String>
@@ -30,10 +30,10 @@ class "WarnCommand" {
     + execute(): void
 }
 
-EncouragementCommand -[hidden]right-> Reminder
-Reminder -[hidden]right-> WarnCommand
+EncouragementCommand -[hidden]right-> ReminderCommand
+ReminderCommand -[hidden]right-> WarnCommand
 EncouragementCommand -up-|> "{abstract} \n Command"
-Reminder -up-|> "{abstract} \n Command"
+ReminderCommand -up-|> "{abstract} \n Command"
 WarnCommand -up-|> "{abstract} \n Command"
 
 @enduml

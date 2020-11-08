@@ -9,6 +9,7 @@ import seedu.duke.command.ClearSpendingListCommand;
 import seedu.duke.command.Command;
 import seedu.duke.command.MultipleCommand;
 import seedu.duke.exceptions.InvalidCommandException;
+import seedu.duke.exceptions.InvalidNumberException;
 
 public class ClearParser extends Parser {
     public ClearParser() {
@@ -35,15 +36,16 @@ public class ClearParser extends Parser {
         options.addOption(budget);
     }
 
-    public Command parse(String[] args) throws ParseException, InvalidCommandException {
-        CommandLine line = parser.parse(options, args);
+    public Command parse(String[] args) throws InvalidCommandException,
+        InvalidNumberException, ParseException {
+        CommandLine line = getCommandLine(args);
         MultipleCommand mc = new MultipleCommand();
 
-        Integer index = clearList(line, "r");
+        Integer index = parseOptionalIndex(line, "r");
         if (index != null) {
             mc.addCommand(new ClearRepaymentListCommand(index == -1, index));
         }
-        index = clearList(line, "s");
+        index = parseOptionalIndex(line, "s");
         if (index != null) {
             mc.addCommand(new ClearSpendingListCommand(index == -1, index));
         }
@@ -57,28 +59,4 @@ public class ClearParser extends Parser {
         return mc;
     }
 
-    /**
-     * clearList parses line with flag for 0..1 argument given
-     * @param line to check flags with
-     * @param flag for command
-     * @return null for option not selected, -1 for clear all, >=0 for clear 1
-     * @throws InvalidCommandException if argument is given is invalid index
-     */
-    private Integer clearList(CommandLine line, String flag) throws InvalidCommandException {
-        if (!line.hasOption(flag)) {
-            return null;
-        }
-
-        String indexString = line.getOptionValue(flag);
-        boolean isClearAll = indexString == null;
-        if (isClearAll) {
-            return -1;
-        }
-
-        Integer index = getIndex(indexString);
-        if (index == null) {
-            throw new InvalidCommandException();
-        }
-        return index;
-    }
 }

@@ -8,7 +8,7 @@ financial situation and track their spending efficiently.
 ### Summary of Contributions
 * Code contribution:
   1. `Ui` class (some functions and methods)
-  2. `AddCommand` class
+  2. `AddCommand` class (some functions and methods)
   3. `ClearBudgetCommand` class
   4. `ClearRepaymentListCommand` class
   5. `ClearSpendingListCommand` class
@@ -16,6 +16,10 @@ financial situation and track their spending efficiently.
   7. `PurgeDataCommand` class
   8. `HelpCommand` class
   9. `Budget` class
+  10. `InvalidClearBudgetException` class
+  11. `InvalidClearRepaymentException` class
+  12. `InvalidClearSpendingException` class
+  13. `InvalidFormatException` class
   
   Refer to this link for more information: 
   [functional code](https://nus-cs2113-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=&sort=groupTitle&sortWithin=title&since=2020-09-27&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=xieyaoyue&tabRepo=AY2021S1-CS2113T-F14-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=functional-code)
@@ -33,10 +37,12 @@ financial situation and track their spending efficiently.
    1. Section 1 Introduction 
    2. Section 2 Setting up
    3. Section 3.1 Architecture
-   4. Section 3.4 Command component
-   5. Section 4.1 Add Feature
-   6. Section 4.2 Clear Feature
-   7. Section 4.10 Encouragement Feature
+   4. Section 3.2 UI Component
+   5. Section 3.4 Command Component
+   6. Section 4.1 Add Feature
+   7. Section 4.2 Clear Feature
+   8. Section 4.10 Encouragement Feature
+   9. Appendix E: Instructions for Manual Testing
     
  * Team-based tasks contributions:
    1. Necessary general code enhancements

@@ -1,11 +1,10 @@
 package seedu.duke.command;
 
-import seedu.duke.data.Budget;
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.exceptions.InvalidClearBudgetException;
 import seedu.duke.ui.Ui;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,13 +12,13 @@ public class ClearBudgetCommand extends Command {
     private static Logger logger = Logger.getLogger("ClearBudgetCommand");
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws
-            InvalidClearBudgetException {
-        if (!Budget.hasBudget) {
+    public void execute(Data data, Ui ui) throws
+        InvalidClearBudgetException, IOException {
+        if (!data.budget.hasBudget) {
             throw new InvalidClearBudgetException();
         }
         logger.log(Level.FINE, "going to clear budget");
-        Budget.clearBudget();
+        data.budget.clearBudget();
         ui.printClearBudget();
     }
 }

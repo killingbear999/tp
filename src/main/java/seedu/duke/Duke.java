@@ -1,39 +1,37 @@
 package seedu.duke;
 
 import seedu.duke.command.Command;
-import seedu.duke.command.Reminder;
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
-import seedu.duke.exceptions.DukeException;
-import seedu.duke.exceptions.InvalidClearRepaymentException;
+import seedu.duke.command.ReminderCommand;
+import seedu.duke.data.Data;
+import seedu.duke.exceptions.InvalidCommandException;
 import seedu.duke.parser.Parser;
-import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
-import java.io.IOException;
+import java.text.ParseException;
 
 public class Duke {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
     private static Ui ui;
-    private static SpendingList spendingList;
-    private static RepaymentList repaymentList;
-    private static Reminder reminder;
+    private static ReminderCommand reminderCommand;
+    private static Data data;
 
     /**
      * Runs the program until termination.
      */
     private static void run() {
         ui.printWelcomeMessage();
-        reminder.execute(spendingList, null, ui);
+        reminderCommand.execute(data, ui);
         boolean isExit = false;
         do {
             try {
                 String fullCommand = ui.getUserInput();
                 Command c = Parser.parseCommand(fullCommand);
-                c.execute(spendingList, repaymentList, ui);
+                c.execute(data, ui);
                 isExit = c.isExit();
+            } catch (ParseException e) {
+                ui.printErrorMessage(new InvalidCommandException().toString());
             } catch (Exception e) {
                 ui.printErrorMessage(e.toString());
             }
@@ -46,10 +44,9 @@ public class Duke {
      */
     public Duke() {
         ui = new Ui();
-        reminder = new Reminder();
+        reminderCommand = new ReminderCommand();
         try {
-            spendingList = new Storage("data/duke_spending.json").loadSpendingList();
-            repaymentList = new Storage("data/duke_repayment.json").loadRepaymentList();
+            data = new Data();
         } catch (Exception e) {
             ui.printErrorMessage(e.toString());
             System.exit(0);

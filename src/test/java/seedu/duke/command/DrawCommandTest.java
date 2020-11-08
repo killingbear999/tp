@@ -1,9 +1,11 @@
 package seedu.duke.command;
 
 import org.junit.jupiter.api.Test;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.data.Item;
+import seedu.duke.data.SpendingList;
 import seedu.duke.ui.Ui;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,7 +42,8 @@ class DrawCommandTest {
     void execute() {
         initSpendingList();
         try {
-            new DrawCommand("2020", null, false).execute(spendingList, null, ui);
+            Data data = new Data(null, null, null);
+            new DrawCommand("2020", null, false).execute(data, ui);
         } catch (Exception e) {
             assert false;
         }

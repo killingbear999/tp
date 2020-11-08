@@ -1,11 +1,10 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Category;
+import seedu.duke.data.Data;
+import seedu.duke.exceptions.InvalidMonthException;
 import seedu.duke.exceptions.InvalidYearException;
 import seedu.duke.ui.Ui;
-import seedu.duke.data.Category;
-import seedu.duke.exceptions.InvalidMonthException;
 import seedu.duke.utilities.DateFormatter;
 
 import java.util.logging.Level;
@@ -23,8 +22,11 @@ public class SummaryCommand extends DateCommand {
     public SummaryCommand(String year, String month) {
         String monthFormat = dateFormatter.changeMonthFormat(month);
         isValidYear = hasValidYear(year);
+        System.out.println(year + month);
         if (monthFormat == null && month != null) {
             isValidMonth = false;
+            period = year;
+        } else if (isValidYear && month == null) {
             period = year;
         } else {
             period = year + "-" + monthFormat;
@@ -36,7 +38,7 @@ public class SummaryCommand extends DateCommand {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui)
+    public void execute(Data data, Ui ui)
             throws InvalidMonthException, InvalidYearException {
         logger.log(Level.FINE, "going to start processing");
         if (!isValidMonth) {
@@ -45,11 +47,11 @@ public class SummaryCommand extends DateCommand {
         if (!isValidYear) {
             throw new InvalidYearException();
         }
-        double amountSpent = spendingList.getSpendingAmountTime(period);
+        double amountSpent = data.spendingList.getSpendingAmountTime(period);
         logger.log(Level.FINE, "end of processing");
         ui.printSummaryMessage(amountSpent);
         for (Category c : Category.values()) {
-            double categoryAmountSpent = spendingList.getSpendingAmountCategory(c.toString(), period);
+            double categoryAmountSpent = data.spendingList.getSpendingAmountCategory(c.toString(), period);
             ui.printSummaryCategory(c.name(), categoryAmountSpent);
         }
     }

@@ -6,5 +6,6 @@ user<-->(ui)
 (main)-right->(data)
 (main)-left->(parser)
 (main)-->(storage)
+(command)-right->(ui)
 
 @enduml

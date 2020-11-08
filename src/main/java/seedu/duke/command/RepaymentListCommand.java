@@ -1,13 +1,12 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.ui.Ui;
 
 //@@author killingbear999
 public class RepaymentListCommand extends Command {
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) {
-        ui.printRepaymentList(repaymentList.getRepaymentList());
+    public void execute(Data data, Ui ui) {
+        ui.printRepaymentList(data.repaymentList.getRepaymentList());
     }
 }

@@ -1,9 +1,8 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.exceptions.InvalidClearSpendingException;
-import seedu.duke.exceptions.InvalidIndexException;
+import seedu.duke.exceptions.InvalidNumberException;
 import seedu.duke.ui.Ui;
 
 import java.io.IOException;
@@ -20,26 +19,26 @@ public class ClearSpendingListCommand extends Command {
         this.clearIndex = clearIndex;
     }
 
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws IOException,
-            InvalidIndexException, InvalidClearSpendingException {
-        int size = spendingList.getListSize();
+    public void execute(Data data, Ui ui) throws IOException,
+            InvalidClearSpendingException, InvalidNumberException {
+        int size = data.spendingList.getListSize();
         if (size == 0) {
             throw new InvalidClearSpendingException();
         }
         if (clearIndex > size) {
             logger.log(Level.FINE, "clearIndex is invalid");
-            throw new InvalidIndexException();
+            throw new InvalidNumberException();
         }
         logger.log(Level.FINE, "going to clear spending list");
         if (!isClearAll) {
-            int beforeClearSize = spendingList.getListSize();
-            ui.printClearIndex(spendingList.getItem(clearIndex - 1));
-            spendingList.deleteItem(clearIndex - 1);
-            int afterClearSize = spendingList.getListSize();
+            int beforeClearSize = data.spendingList.getListSize();
+            ui.printClearIndex(data.spendingList.getItem(clearIndex - 1));
+            data.spendingList.deleteItem(clearIndex - 1);
+            int afterClearSize = data.spendingList.getListSize();
             assert beforeClearSize - afterClearSize == 1 : "One item should be cleared from spending list";
         } else {
-            spendingList.clearAllItems();
-            assert spendingList.getListSize() == 0 : "List size should be 0";
+            data.spendingList.clearAllItems();
+            assert data.spendingList.getListSize() == 0 : "List size should be 0";
             ui.printClearAllSpendingList();
         }
     }

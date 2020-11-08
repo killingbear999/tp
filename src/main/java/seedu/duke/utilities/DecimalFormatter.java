@@ -10,7 +10,7 @@ public class DecimalFormatter {
     
     public double convert(double amount) {
         DecimalFormat df = new DecimalFormat("0.0000");
-        amount = Double.valueOf(df.format(amount));
+        amount = Double.parseDouble(df.format(amount));
         return amount;
     }
 }

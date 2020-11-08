@@ -1,8 +1,96 @@
 # Developer Guide
+![cover page](images/CentWiseDollarWise.png)
+-----
+
+## Content Page
+1. [Introduction](#1-introduction)
+2. [Setting Up](#2-setting-up)
+
+    2.1 [Prerequisites](#21-prerequisites)
+
+    2.2 [Setting Up the Project in your Computer](#22-setting-up-the-project-in-your-computer)
+
+    2.3 [Verifying the Setup](#23-verifying-the-setup)
+
+3. [Design](#3-design)
+
+    3.1 [Architecture](#31-architecture)
+
+    3.2 [UI Component](#32-ui-component)
+
+    3.3 [Parser Component](#33-parser-component)
+
+    3.4 [Command Component](#34-command-component)
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.1 [CLI `Command`s related to Spending List](#341-cli-commands-related-to-spending-list)
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.2 [CLI `Command`s related to Repayment List](#342-cli-commands-related-to-repayment-list)
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.3 [CLI `Command`s related to Budget](#343-cli-commands-related-to-budget)
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.4 [General CLI `Command`s](#344-general-cli-commands)
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.4.5 [Hidden `Command`s](#345-hidden-commands)
+
+    3.5 [Data Component](#35-data-component)
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.5.1 [Spending List](#351-spending-list)
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.5.2 [Repayment List](#352-repayment-list)
+
+    3.6 [Storage Component](#36-storage-component)
+
+4. [Implementation](#4-implementation)
+
+    4.1 [Add Feature](#41-add-feature)
+    
+    4.2 [Clear Feature](#42-clear-feature)
+    
+    4.3 [Edit Feature](#43-edit-feature)
+    
+    4.4 [Convert Feature](#44-convert-feature)
+    
+    4.5 [Set Budget Feature](#45-set-budget-feature)
+    
+    4.6 [Warn Feature](#46-warn-feature)
+    
+    4.7 [Repay Feature](#47-repay-feature)
+    
+    4.8 [Summary Feature](#48-summary-feature)
+    
+    4.9 [Reminder Feature](#49-reminder-feature)
+    
+    4.10 [Encouragement Feature](#410-encouragement-feature)
+    
+    4.11 [Export Feature](#411-export-feature)
+    
+    4.12 [Draw Feature](#412-draw-feature)
+    
+5. [Dev Ops](#5-dev-ops)
+
+    5.1 [Build Automation](#51-build-automation)
+    
+    5.2 [Continuous Integration](#52-continuous-integration-ci)
+    
+    5.3 [Making a Release](#53-making-a-release)
+    
+    5.4 [Coverage Reporting](#54-coverage-reporting)
+    
+Appendix A: [About the Product](#appendix-a-about-the-product)
+
+Appendix B: [User Stories](#appendix-b-user-stories)
+
+Appendix C: [Non-Functional Requirements](#appendix-c-non-functional-requirements)
+
+Appendix D: [Glossary](#appendix-d-glossary)
+
+Appendix E: [Instructions for Manual Testing](#appendix-e-instructions-for-manual-testing)
+
+------
 
 ## 1. Introduction
 Cent Wise Dollar Wise is a desktop application for money management, optimised for use via a Command Line Interface (CLI). This application aims to help NUS hostel students manage their financial situation and track their spending efficiently. 
-This developer guide provides information on the architecture and design of the application. It will not only help you get started as a Cent Wise Dollar Wise contributer, but that you will find useful to refer to even if you are already a contributer of this project. 
+This developer guide provides information on the architecture and design of the application. It will not only help you get started as a Cent Wise Dollar Wise contributor, but that you will find useful to refer to even if you are already a contributor of this project. 
 
 ## 2. Setting Up
 ### 2.1 Prerequisites
@@ -31,7 +119,7 @@ The following are the steps to verify your setup:
 
 ## 3. Design
 ### 3.1 Architecture
-![image](https://user-images.githubusercontent.com/45732128/97735431-4886f780-1b15-11eb-920c-24e5bf7a76fe.png) <br>
+![image](images/architecture.png) <br>
 
 The architecture diagram above explains the high-level design of the application. Given below is a quick overview of each component:
 
@@ -47,6 +135,8 @@ The architecture diagram above explains the high-level design of the application
 
 `parser`: Analyzes the user command
 
+`utilities`: Contains classes that are used by multiple components
+
 **How the Architecture Components Interact with Each Other** <br>
 
 The sequence diagram below shows how the components interact with each other when the user issues a general command. <br>
@@ -55,6 +145,7 @@ The sequence diagram below shows how the components interact with each other whe
 
 
 ### 3.2 UI Component
+This component, consisting of the `Ui` class, is responsible for receiving user input and displaying appropriate output messages for the user. This includes error messages, warning messages, encouragement quotes, and messages that indicate if a command is successfully executed. 
 
 ### 3.3 Parser Component
 
@@ -88,26 +179,31 @@ The following class diagram describes general CLI `Command`s that apply to the w
 #### 3.4.5 Hidden `Command`s
 The following class diagram describes the hidden commands within the program. <br>
 
-![image](https://user-images.githubusercontent.com/45732128/97780364-28137780-1bbf-11eb-9442-caa76f3db339.png)
+![image](https://user-images.githubusercontent.com/60251547/98458937-9fa16200-21d0-11eb-91fe-968ca030149c.png)
+
 
 ### 3.5 Data Component
-This component holds the data of the application, including the SpendingList class, Budget class and RepaymentList 
-class, in the memory.
+This component holds the data of the application, including the SpendingList class and RepaymentList class, 
+in the memory.
 
-#### 3.5.1 SpendingList
-The SpendingList class also stores a list of Item objects that the user has spent. The `SpendingList` does not depend on 
+#### 3.5.1 Spending List
+The SpendingList class stores a list of `Item` objects that the user has spent. The `SpendingList` does not depend on 
 Ui, Parser and Storage components. 
 
 Below shows a class diagram how `SpendingList` interacts with other classes. <br>
 
-![image](images/classDiagram.png)
-Figure X: 
+![image](images/spendingListClass.png)
 
-#### 3.5.2 RepaymentList
+#### 3.5.2 Repayment List
+The RepaymentList class stores a list of `Repay` objects. Similar to SpendingList class, RepaymentList class does not 
+depend on other components. 
+
+Below shows a class diagram how `RepaymentList` interacts with other classes. <br>
+
+![image](images/repaymentListClass.png)
 
 ### 3.6 Storage Component
 
-### 3.7 Common Classes
 
 ## 4. Implementation
 ### 4.1 Add Feature
@@ -267,7 +363,7 @@ stored in the memory.
 
 The following sequence diagram illustrates how this feature works.<br>
 
-![image](https://user-images.githubusercontent.com/45732128/97781639-c7d50380-1bc7-11eb-8fe8-ce1f1e80dc35.png) <br>
+![image](images/SummaryCommand.png) <br>
 
 ### 4.9 Reminder Feature
 `SpendingList` and `WarnCommand` facilitate this feature. The Reminder feature is able to provide the user about the 
@@ -278,14 +374,14 @@ total expenditure of the current week, starting on Monday. It implements the fol
 Below shows an example of usage:
 
 1. User starts the application.
-2. The `Reminder` will be instantiated. The dates of the current week (starting from Monday) will be saved to a list.
-3. In the `Reminder#execute(spendinglist, ui)`, a check will be done to see if there is any budget being set by the user.
+2. The `ReminderCommand` will be instantiated. The dates of the current week (starting from Monday) will be saved to a list.
+3. In the `ReminderCommand#execute(data, ui)`, a check will be done to see if there is any budget being set by the user.
     * If no budget is being set, the total expenditure of current week will be tallied up. 
-    * If there is, `WarnCommand#execute(spendingList, ui)` will be called first before tallying up the expenditure. 
+    * If there is, `WarnCommand#execute(data, ui)` will be called first before tallying up the expenditure. 
 
 The following sequence diagram illustrates how this feature works. <br>
 
-![image](https://user-images.githubusercontent.com/45732128/97781544-2e0d5680-1bc7-11eb-938e-110342ff8842.png) <br>
+![image](images/reminder.png) <br>
 
 ### 4.10 Encouragement Feature
 The Ui facilitate this feature. The Encouragement feature regularly encourages the user to keep up his effort in using the application. It implements the following operation:
@@ -402,5 +498,19 @@ The following statements describe the non-functional requirements for the applic
 ## Appendix D: Glossary
 * Mainstream OS: Windows, Linux, macOS
 
-## Appendix E: Instructions for manual testing
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+## Appendix E: Instructions for Manual Testing
+Given below are the instructions to test the application manually.
+
+### E.1 Launch
+1. Download the jar file and copy into an empty folder.
+2. Navigate to the folder in the command prompt.
+3. Enter `java -jar Duke.jar` and press `enter` to launch the application. 
+4. You should expect a new `data` folder created within the same folder as the jar file. This `data` folder will contain a file named `duke.json`.
+
+### E.2 Application Commands
+#### 1. `Draw` Command
+Test the command by executing `draw 2020`. You should expect to see the following output in Microsoft Excel. <br>
+![image](https://user-images.githubusercontent.com/45732128/98440296-04a67a80-2133-11eb-8304-94714b91e38f.png)
+
+#### 2. Other Commands
+Please refer to [Cent Wise Dollar Wise User Guide](https://ay2021s1-cs2113t-f14-2.github.io/tp/UserGuide.html).

@@ -1,7 +1,7 @@
 package seedu.duke.command;
 
+import seedu.duke.data.Data;
 import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
 import seedu.duke.exceptions.InvalidAmountException;
 import seedu.duke.exceptions.InvalidDateException;
 import seedu.duke.exceptions.InvalidNameException;
@@ -26,7 +26,7 @@ public class RepayCommand extends Command {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws IOException,
+    public void execute(Data data, Ui ui) throws IOException,
             InvalidDateException, InvalidAmountException, InvalidNameException {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter("yyyy-MM-dd");
         if (repayment < 0.01) {
@@ -35,7 +35,7 @@ public class RepayCommand extends Command {
         if (!dateTimeFormatter.isValid(deadline)) {
             throw new InvalidDateException();
         }
-        repay(repaymentList, ui);
+        repay(data.repaymentList, ui);
     }
     
     private void repay(RepaymentList repaymentList, Ui ui) throws IOException, InvalidNameException {

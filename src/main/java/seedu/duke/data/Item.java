@@ -2,6 +2,7 @@ package seedu.duke.data;
 
 import java.time.LocalDate;
 
+//@@author pinfang
 public class Item {
     private String description;
     private double amount;

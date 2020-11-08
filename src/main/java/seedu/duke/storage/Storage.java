@@ -2,12 +2,14 @@ package seedu.duke.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import seedu.duke.data.Budget;
 import seedu.duke.data.RepaymentList;
 import seedu.duke.data.SpendingList;
 import seedu.duke.exceptions.InvalidStorageFileExtensionException;
 import seedu.duke.exceptions.InvalidStorageFilePathException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -19,11 +21,13 @@ public class Storage {
 
     /**
      * Creates the Storage object based on the user-specified file path.
+     *
      * @param path relative path to json file
-     * @throws InvalidStorageFilePathException for empty or blank file path
+     * @throws InvalidStorageFilePathException      for empty or blank file path
      * @throws InvalidStorageFileExtensionException for non-json file path
      */
-    public Storage(String path) throws InvalidStorageFilePathException, InvalidStorageFileExtensionException {
+    public Storage(String path) throws InvalidStorageFilePathException, InvalidStorageFileExtensionException,
+        FileNotFoundException {
         // Validate path
         String[] parts = path.split("\\.");
         if (path.isBlank() || parts.length == 0) {
@@ -39,19 +43,19 @@ public class Storage {
             .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
             .serializeNulls()
             .create();
-        if (file.exists()) {
-            return;
-        }
-        try {
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new InvalidStorageFilePathException();
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new InvalidStorageFilePathException();
+            }
         }
     }
 
     /**
      * Exposes location of storage for Duke applications.
+     *
      * @return file path
      */
     public String getFilePath() {
@@ -61,16 +65,14 @@ public class Storage {
     public SpendingList loadSpendingList() {
         SpendingList sl;
         try {
-            Scanner s = new Scanner(file);
-            String jsonContent = s
-                    .useDelimiter("\\Z")
-                    .next();
-            sl = gson.fromJson(jsonContent, SpendingList.class);
+            String json = new Scanner(file)
+                .useDelimiter("\\Z")
+                .next();
+            sl = gson.fromJson(json, SpendingList.class);
             if (sl == null) {
                 throw new InvalidStorageFilePathException();
             }
         } catch (Exception e) {
-            System.out.println("error");
             sl = new SpendingList(this);
         }
         sl.storage = this;
@@ -80,11 +82,10 @@ public class Storage {
     public RepaymentList loadRepaymentList() {
         RepaymentList rl;
         try {
-            Scanner s = new Scanner(file);
-            String jsonContent = s
+            String json = new Scanner(file)
                 .useDelimiter("\\Z")
                 .next();
-            rl = gson.fromJson(jsonContent, RepaymentList.class);
+            rl = gson.fromJson(json, RepaymentList.class);
             if (rl == null) {
                 throw new InvalidStorageFilePathException();
             }
@@ -93,6 +94,23 @@ public class Storage {
         }
         rl.storage = this;
         return rl;
+    }
+
+    public Budget loadBudget() {
+        Budget b;
+        try {
+            String json = new Scanner(file)
+                .useDelimiter("\\Z")
+                .next();
+            b = gson.fromJson(json, Budget.class);
+            if (b == null) {
+                throw new InvalidStorageFilePathException();
+            }
+        } catch (Exception e) {
+            b = new Budget(this);
+        }
+        b.storage = this;
+        return b;
     }
 
     public void save(SpendingList spendingList) throws IOException {
@@ -104,6 +122,13 @@ public class Storage {
 
     public void save(RepaymentList repaymentList) throws IOException {
         String jsonContent = gson.toJson(repaymentList);
+        FileWriter fw = new FileWriter(file, false);
+        fw.write(jsonContent);
+        fw.close();
+    }
+
+    public void save(Object object) throws IOException {
+        String jsonContent = gson.toJson(object);
         FileWriter fw = new FileWriter(file, false);
         fw.write(jsonContent);
         fw.close();

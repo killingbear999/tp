@@ -1,13 +1,12 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
-import seedu.duke.exceptions.EmptyListException;
-import seedu.duke.exceptions.InvalidNameException;
-import seedu.duke.exceptions.InvalidInputCurrencyException;
-import seedu.duke.exceptions.InvalidAmountException;
-import seedu.duke.exceptions.InvalidNumberException;
+import seedu.duke.data.Data;
 import seedu.duke.exceptions.EmptyCommandException;
+import seedu.duke.exceptions.EmptyListException;
+import seedu.duke.exceptions.InvalidAmountException;
+import seedu.duke.exceptions.InvalidInputCurrencyException;
+import seedu.duke.exceptions.InvalidNameException;
+import seedu.duke.exceptions.InvalidNumberException;
 import seedu.duke.ui.Ui;
 import seedu.duke.utilities.AmountConverter;
 import seedu.duke.utilities.DecimalFormatter;
@@ -32,7 +31,7 @@ public class EditCommand extends Command {
     }
     
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) throws IOException,
+    public void execute(Data data, Ui ui) throws IOException,
             InvalidAmountException, InvalidNumberException, InvalidInputCurrencyException, InvalidNameException,
             EmptyListException, EmptyCommandException {
         
@@ -40,9 +39,9 @@ public class EditCommand extends Command {
             throw new EmptyCommandException();
         }
     
-        if (spendingList.getListSize() == 0) {
+        if (data.spendingList.getListSize() == 0) {
             throw new EmptyListException();
-        } else if (index >= spendingList.getListSize() && spendingList.getListSize() != 0) {
+        } else if (index >= data.spendingList.getListSize() && data.spendingList.getListSize() != 0) {
             throw new InvalidNumberException();
         }
         
@@ -50,14 +49,14 @@ public class EditCommand extends Command {
             if (!isValidName()) {
                 throw new InvalidNameException();
             }
-            spendingList.editItemDescription(index, description);
-            ui.printEdit(spendingList, index);
+            data.spendingList.editItemDescription(index, description);
+            ui.printEdit(data.spendingList, index);
         }
         
         if (amount != null) {
-            int size = spendingList.getListSize();
+            int size = data.spendingList.getListSize();
             if (size != 0) {
-                defaultCurrency = spendingList.getItem(0).getSymbol();
+                defaultCurrency = data.spendingList.getItem(0).getSymbol();
             }
             if (!currency.equals(defaultCurrency)) {
                 AmountConverter amountConverter = new AmountConverter(currency, amount, defaultCurrency);
@@ -70,20 +69,20 @@ public class EditCommand extends Command {
             if (amount < 0.01) {
                 throw new InvalidAmountException();
             }
-            String defaultCurrency = spendingList.getItem(0).getSymbol();
+            String defaultCurrency = data.spendingList.getItem(0).getSymbol();
             if (currency.equals(defaultCurrency)) {
                 DecimalFormatter decimalFormatter = new DecimalFormatter();
                 amount = decimalFormatter.convert(amount);
-                spendingList.editItemAmount(index, amount);
-                ui.printEdit(spendingList, index);
+                data.spendingList.editItemAmount(index, amount);
+                ui.printEdit(data.spendingList, index);
             } else {
                 ui.printInvalidConversion(defaultCurrency);
             }
         }
         
         if (category != null) {
-            spendingList.editItemCategory(index, category);
-            ui.printEdit(spendingList, index);
+            data.spendingList.editItemCategory(index, category);
+            ui.printEdit(data.spendingList, index);
         }
     }
     

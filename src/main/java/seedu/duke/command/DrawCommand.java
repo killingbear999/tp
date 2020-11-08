@@ -1,19 +1,5 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
-import seedu.duke.data.Item;
-import seedu.duke.utilities.DateFormatter;
-import seedu.duke.utilities.FileExplorer;
-import seedu.duke.ui.Ui;
-import seedu.duke.exceptions.InvalidCommandException;
-
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.apache.poi.xddf.usermodel.chart.AxisPosition;
 import org.apache.poi.xddf.usermodel.chart.ChartTypes;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartAxis;
@@ -32,6 +18,17 @@ import org.openxmlformats.schemas.drawingml.x2006.chart.CTBoolean;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTLineChart;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTLineSer;
 import org.openxmlformats.schemas.drawingml.x2006.chart.CTPlotArea;
+import seedu.duke.data.Data;
+import seedu.duke.data.Item;
+import seedu.duke.data.SpendingList;
+import seedu.duke.ui.Ui;
+import seedu.duke.utilities.DateFormatter;
+import seedu.duke.utilities.FileExplorer;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 //@@author Wu-Haitao
 public class DrawCommand extends DateCommand {
@@ -81,7 +78,7 @@ public class DrawCommand extends DateCommand {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) {
+    public void execute(Data data, Ui ui) {
         if (!parameterIsValid) {
             ui.printDrawMessage(false);
             return;
@@ -95,9 +92,9 @@ public class DrawCommand extends DateCommand {
         ArrayList<Item> items = new ArrayList<>();
         SpendingList targetSpendingList = new SpendingList(items);
 
-        for (int i = 0; i < spendingList.getListSize(); i++) {
-            if (spendingList.getItem(i).getDate().startsWith(timePeriod)) {
-                targetSpendingList.getSpendingList().add(spendingList.getItem(i));
+        for (int i = 0; i < data.spendingList.getListSize(); i++) {
+            if (data.spendingList.getItem(i).getDate().startsWith(timePeriod)) {
+                targetSpendingList.getSpendingList().add(data.spendingList.getItem(i));
             }
         }
         if (targetSpendingList.getListSize() != 0) {

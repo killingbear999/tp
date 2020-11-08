@@ -7,49 +7,39 @@ financial situation and track their spending efficiently.
 
 ### Summary of Contributions
 * Code contribution: 
-    1. `Item` class
-    2. `Category` class
-    3. `SpendingList` class
-    4. `Summary` class
-    5. `Reminder` class
-    6. `DateFormatter` class
-    7. `Ui` class (parts related to points iv and v)
+    * `Item` class
+    * `Category` class
+    * `SpendingList` class
+    * `Summary` class
+    * `Reminder` class
+    * `DateFormatter` class
+    * `Ui` class (some parts)
     
     Refer these links for more information: 
     [`functional code`](https://nus-cs2113-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=&sort=groupTitle&sortWithin=title&since=2020-09-27&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other&tabOpen=true&tabType=authorship&tabAuthor=pinfang&tabRepo=AY2021S1-CS2113T-F14-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other)
  
- * Enhancement Features
-    * Summary
-           
-        Allows the user to view expenditure summary on selected year or month.
-        Expenditure is also categorised.
-           
-    * Reminder
-    
-        Reminds the user about their weekly expenditure and the amount of budget left.
-        Gives out warning if user is overspending soon.
- 
  * UG documentation contributions:
-    1. Viewing summary
-    2. Reminder
-    3. Warning
+ 
+    * [Section 3.11 Viewing summary](https://github.com/pinfang/tp/blob/update_UG/docs/UserGuide.md#311-viewing-summary-summary)
+    * [Section 4.1 Reminder](https://github.com/pinfang/tp/blob/update_UG/docs/UserGuide.md#41-reminder)
+    * [Section 4.2 Warning](https://github.com/pinfang/tp/blob/update_UG/docs/UserGuide.md#42-warning)
 
- * DG documentation contributions:   
-    1. Summary Feature
-    2. Reminder Feature
-    3. SpendingList Component
-    4. User Stories (parts related to summary and reminder)
+ * DG documentation contributions: 
+    * [Section 3.5 Data Component](https://github.com/pinfang/tp/blob/update_UG/docs/DeveloperGuide.md#35-data-component)
+    * [Section 4.8 Summary Feature](https://github.com/pinfang/tp/blob/update_UG/docs/DeveloperGuide.md#48-summary-feature)
+    * [Section 4.9 Reminder Feature](https://github.com/pinfang/tp/blob/update_UG/docs/DeveloperGuide.md#49-reminder-feature)
+
     
  * Contributions to team-based tasks:
-    1. Maintaining the issue tracker
-    2. Setting the deadline of milestone
-    3. Updating user/developer docs that are not specific to a feature
+    * Maintaining the issue tracker
+    * Setting the deadline of milestone
+    * Updating user/developer docs that are not specific to a feature
     
     
  * Review/mentoring contributions:
-    1. Reviewing PRs: [link](https://github.com/AY2021S1-CS2113T-F14-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3A%40me)
-    2. Reporting bugs to team members
+    * Reviewing PRs: [link](https://github.com/AY2021S1-CS2113T-F14-2/tp/pulls?q=is%3Apr+is%3Aclosed+reviewed-by%3A%40me)
+    * Reporting bugs to team members
     
  * Contributions beyond the project team:
-    1. Reporting bugs for other team's product during PE dry-run: [link](https://github.com/pinfang/ped/issues)
-    2. DG reviews for other team 
+    * Reporting bugs for other team's product during PE dry-run: [link](https://github.com/pinfang/ped/issues)
+    * DG reviews for other team 

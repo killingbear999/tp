@@ -1,7 +1,6 @@
 package seedu.duke.command;
 
-import seedu.duke.data.RepaymentList;
-import seedu.duke.data.SpendingList;
+import seedu.duke.data.Data;
 import seedu.duke.ui.Ui;
 
 public class SpendingListCommand extends DateCommand {
@@ -15,7 +14,7 @@ public class SpendingListCommand extends DateCommand {
     }
 
     @Override
-    public void execute(SpendingList spendingList, RepaymentList repaymentList, Ui ui) {
-        ui.printSpendingList(spendingList);
+    public void execute(Data data, Ui ui) {
+        ui.printSpendingList(data.spendingList);
     }
 }
